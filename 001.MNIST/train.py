@@ -1,3 +1,4 @@
+# %%
 import os
 import numpy as np
 
@@ -9,7 +10,8 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms, datasets
 
 
-## 1. 트레이닝에 필요한 하이퍼 파라미터 설정
+
+# %% 1. 트레이닝에 필요한 하이퍼 파라미터 설정
 lr = 1e-3
 batch_size = 64
 num_epochs = 10
@@ -19,26 +21,28 @@ log_dir = '../log'
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-## 2. 네트워크 구축하기
+# %% 2. 네트워크 구축하기
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-
-        self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
-        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
+        #레이어 정의
+        self.conv1 = nn.Conv2d(1, 10, kernel_size=5, stride=1, padding=0, bias=True)
+        self.pool1 = nn.MaxPool2d(kernel_size=2)
         self.relu1 = nn.ReLU()
 
-        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
+        self.conv2 = nn.Conv2d(10, 20, kernel_size=5, stride=1, padding=0, bias=True)
         self.drop2 = nn.Dropout2d(p=0.5)
-        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.pool2 = nn.MaxPool2d(kernel_size=2)
         self.relu2 = nn.ReLU()
 
-        self.fc1 = nn.Linear(320, 50)
+        self.fc1 = nn.Linear(320, 50, bias=True)
         self.relu1_fc1 = nn.ReLU()
         self.drop1_fc1 = nn.Dropout2d(p=0.5)
-        self.fc2 = nn.Linear(50, 10)
+
+        self.fc2 = nn.Linear(50, 10, bias=True)
 
     def forward(self, x):
+        #레이어 호출
         x = self.conv1(x)
         x = self.pool1(x)
         x = self.relu1(x)
@@ -58,12 +62,13 @@ class Net(nn.Module):
 
         return x
 
-## 3. 네트워크를 저장하거나 불러오는 함수 작성하기
+# %% 3. 네트워크를 저장하거나 불러오는 함수 작성하기
 def save(ckpt_dir, net, optim, epoch):
     if not os.path.exists(ckpt_dir):
         os.makedirs(ckpt_dir)
 
-        torch.save({'net' : net.state_dict(), 'optim' : optim.state_dict()}, './%s/model_epoch%d.pth' % (ckpt_dir, epoch))
+    torch.save({'net' : net.state_dict(), 'optim' : optim.state_dict()},
+                   './%s/model_epoch%d.pth' % (ckpt_dir, epoch))
 
 def load(ckpt_dir, net, optim):
     ckpt_lst = os.listdir(ckpt_dir)
@@ -76,19 +81,19 @@ def load(ckpt_dir, net, optim):
 
     return net, optim
 
-## 4. mnist 데이터 불러오기
+# %% 4. mnist 데이터 불러오기
 transforms = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5,), (0.5,))
 ])
 
-dataset = datasets.MNIST('..', train=True, download=True, transform=transforms)
+dataset = datasets.MNIST('./', train=True, download=True, transform=transforms)
 loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 
 num_data = len(loader.dataset)
 num_batches = np.ceil(num_data / batch_size)
 
-## 5. 네트워크 설정 및 필요한 손실함수 구현하기
+# %% 5. 네트워크 설정 및 필요한 손실함수 구현하기
 net = Net().to(device)
 params = net.parameters()
 
@@ -100,14 +105,14 @@ optim = torch.optim.Adam(params, lr=lr)
 
 writer = SummaryWriter(log_dir=log_dir)
 
-## 트레이닝 시작하기
+# %% 트레이닝 시작하기
 for epoch in range(1, num_epochs+1):
     net.train()
 
     loss_arr = []
     acc_arr = []
 
-    for batch, (inputs, labels) in enumerate(loader, 1):
+    for batch, (input, labels) in enumerate(loader, 1):
         input = input.to(device)
         label = labels.to(device)
 
