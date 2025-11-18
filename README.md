@@ -1,7 +1,7 @@
 ### 2025.Deep-Learning-Practice
 
 - https://github.com/hanyoseob
-- Yoseob Han 교수님의 딥러닝 실습 예제 학습 내용
+- Yoseob Han 교수님의 딥러닝 예제 개인 실습
 ---
 - 1.MNIST classifier
 - 2.무료 GPU 플랫폼 Colab 사용기
