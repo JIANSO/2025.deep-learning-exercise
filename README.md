@@ -1,1 +1,21 @@
-# 2025.Deep-Learning-Practice
+### 2025.Deep-Learning-Practice
+
+- https://github.com/hanyoseob
+- Yoseob Han 교수님의 딥러닝 실습 예제 학습 내용
+---
+- 1.MNIST classifier
+- 2.무료 GPU 플랫폼 Colab 사용기
+- 3.UNet: 데이터셋 전처리하기
+- 4.UNet 구조 구현하기
+- 5.Data loader & transform 구현하기
+- 6.UNet training 시키기
+- 7.UNet testing 시키기
+- 8.Code 최적화 & parser 추가하기
+- 9.Image regression framework 구축하기 1부
+- 10.Image regression framework 구축하기 2부
+- 11.ResNet 1부: ResBlock & Pixel Shuffle
+- 12.ResNet 2부: Image Regression & Colab Pretrained Results
+- 13.DCGAN: 한 방에 끝내기
+- 14.pix2pix: 한 방에 끝내기
+- 15.Python 에서 C/C++ 과 CUDA C 호출하기
+- 16.CycleGAN: 한방에 끝내기
