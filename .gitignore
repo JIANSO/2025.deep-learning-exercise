@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Checkpoints
+*.pth
+*.pt
+*.ckpt
+
+# Log files
+logs/
+runs/
+
+# Datasets
+data/
+dataset/
+datasets/
+images/
+
+# Others
+*.npy
+*.npz
